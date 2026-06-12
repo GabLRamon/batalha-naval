@@ -1,17 +1,11 @@
 from __future__ import print_function
 import random
 
-try:
-    lerEntrada = raw_input
-except NameError:
-    lerEntrada = input
-
-
 LINHAS = 10
 COLUNAS = 10
 
 
-
+# nao sei se e necessario, a gente pode so colocar no info direto e boa, mas fica mais bonito assim
 NAVIOS_INFO = [
     ["Porta-avioes", "P", 5],
     ["Navio-tanque", "N", 4],
@@ -55,7 +49,15 @@ def criarFrota():
 
 def mostrarTabuleiro(tabuleiro, nome, restantes, preGame):
 
+    #nao sei se precisa do preGame, caso volte pro codigo em uma data posterior, verificar possiblidade de fazer variavel estatica
+
     print("\nTabuleiro do", nome)
+    # vai ficar hardcoded mesmo, preguiça de resolver
+
+    # print("   ------------------------------")
+    # for quantidadeLinha in range(LINHAS):
+    #     print("  " + str(quantidadeLinha), end=" ")
+
     print("    1  2  3  4  5  6  7  8  9 10")
     print("   ------------------------------")
 
@@ -96,7 +98,7 @@ def lerNumero(mensagem):
 
     while True:
         try:
-            return int(lerEntrada(mensagem)) - 1
+            return int(input(mensagem)) - 1
 
         except ValueError:
             print("Erro: digite apenas numeros.")
@@ -105,7 +107,7 @@ def lerNumero(mensagem):
 def lerDirecao():
 
     while True:
-        direcao = lerEntrada("Digite a direcao (H para horizontal, V para vertical): ")
+        direcao = input("Digite a direcao (H para horizontal, V para vertical): ")
         direcao = direcao.upper()
 
         if direcao == "H" or direcao == "V":
@@ -225,7 +227,9 @@ def verificarAfundou(navio):
     return False
 
 
-def ataqueJogador(tabuleiro_oculto, tabuleiro_visivel, frota):
+def ataqueJogador(tabuleiroOculto, tabuleiroVisivel, frota):
+
+    #todo esse codigo ficou muito mal legivel, dar uma olhada dps
 
     while True:
         linha = lerNumero("Digite a linha para atacar: ")
@@ -233,20 +237,20 @@ def ataqueJogador(tabuleiro_oculto, tabuleiro_visivel, frota):
 
         if not posicaoValida(linha, coluna):
             print("Posicao invalida.")
-        elif tabuleiro_visivel[linha][coluna] != 0:
+        elif tabuleiroVisivel[linha][coluna] != 0:
             print("Essa posicao ja foi atacada.")
         else:
             break
 
-    conteudo = tabuleiro_oculto[linha][coluna]
+    conteudo = tabuleiroOculto[linha][coluna]
 
     if conteudo == 0:
         print("\nNao foi dessa vez!")
-        tabuleiro_visivel[linha][coluna] = "O"
+        tabuleiroVisivel[linha][coluna] = "O"
         return "errou"
 
     print("\nParabens! Voce acertou!")
-    tabuleiro_visivel[linha][coluna] = "X"
+    tabuleiroVisivel[linha][coluna] = "X"
 
     navio = procurarNavio(frota, conteudo)
     navio["acertos"] += 1
@@ -305,6 +309,8 @@ def jogar():
     print("Bem vindo ao Batalha Naval!")
     print("Modo: jogador contra computador")
     print("Tabuleiro: 10 x 10")
+
+    mostrarTabuleiro(tabuleiroJogadorOculto, "Jogador", 0, True);
 
     posicionarJogador(tabuleiroJogadorOculto, frotaJogador)
     posicionarComputador(tabuleiroComputadorOculto, frotaComputador)
