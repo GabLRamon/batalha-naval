@@ -366,7 +366,7 @@ def jogar():
     else:
         print("\nO computador venceu!")
 
-    print("Jogo desenvolvido por: Gabriel Leite Ramon e Nome 2")
+    print("Jogo desenvolvido por: Gabriel Leite Ramon e Gustavo Machado Garcia")
     print("Obrigado por jogar nosso jogo!")
 
 
